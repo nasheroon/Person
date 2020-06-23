@@ -1,5 +1,4 @@
-FROM openjdk:8-jdk-alpine
-WORKDIR /opt/app
-ARG JAR_FILE=target/spring-boot-person.jar
-COPY ${JAR_FILE} person.jar
-ENTRYPOINT ["java","-jar","person.jar"]
+FROM openjdk:8
+ADD target/spring-boot-person.jar spring-boot-person.jar
+EXPOSE 8086
+ENTRYPOINT ["java","-jar","spring-boot-person.jar"]

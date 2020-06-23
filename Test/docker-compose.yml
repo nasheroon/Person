@@ -1,8 +1,6 @@
 version: '3'
-
 services:
-
-  myapp-mysql:
+  mysql-standalone:
     image: mysql:8.0
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -10,18 +8,14 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=password
     ports:
-      - 3306:3306
+      - 3308:3308
 
-  myapp-main:
-    image: spring-boot:1.0
+  spring-boot-person:
+    image: spring-boot-person:latest
     restart: on-failure
     depends_on:
-      - myapp-mysql
+      - mysql-standalone
     ports:
-      - 8080:8080
+      - 8086:8086
     environment:
-      - DATABASE_HOST=myapp-mysql
-      - DATABASE_USER=admin
-      - DATABASE_PASSWORD=password
-      - DATABASE_NAME=person
-      - DATABASE_PORT=3306
+      WAIT_HOSTS: mysql:3308
